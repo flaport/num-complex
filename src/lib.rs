@@ -77,7 +77,7 @@ pub use crate::crand::ComplexDistribution;
 ///               y: *mut Complex<f64>, incy: *const c_int);
 /// }
 /// ```
-#[derive(PartialEq, Eq, Copy, Clone, Hash, Debug, Default)]
+#[derive(PartialEq, Eq, Copy, Clone, Hash, Default)]
 #[repr(C)]
 #[cfg_attr(
     feature = "rkyv",
@@ -1280,7 +1280,16 @@ where
     T: fmt::Display + Num + PartialOrd + Clone,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write_complex!(f, "", "", self.re, self.im, T)
+        write!(f, "{} + {}j", self.re, self.im)
+    }
+}
+
+impl<T> fmt::Debug for Complex<T>
+where
+    T: fmt::Display + Num + PartialOrd + Clone,
+{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} + {}j", self.re, self.im)
     }
 }
 
